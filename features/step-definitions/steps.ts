@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import BendigoHomepage from "../../features/pageobjects/bankingpage";
+import BankHome from "../pageobjects/bankingpage";
 
 Given(/^I am on the login page$/, async function () {
   console.log("Before opening browser..");
@@ -17,22 +17,25 @@ Then(/^Click on Banking$/, async function () {
   link.click;
   await browser.pause(5000);
 
-  // BendigoHomepage.clickBankingBtn()
+  // BankHome.clickBankingBtn()
 });
 
 Then(/^I Select CreditCards$/, async function () {
   const cc = await $('(//a[contains(text(),"Credit cards")])[1]');
   cc.click();
-  await browser.pause(5000);
+  await browser.pause(10000);
 });
 
 Then(/^Click on Applynow$/, async function () {
-  await $("(//a[@id='Button-232952'])[2]").scrollIntoView();
-  await browser.pause(4000);
+  await browser.$("(//*[@id='Button-232952'])").scrollIntoView()
+  // await $("(//a[@id='Button-232952'])[2]").scrollIntoView();
+  // await browser.pause(4000);
   // await $("#Button-232952").moveTo();
   // await browser.pause(3000);
-  await $("(//a[@id='Button-232952'])[2]").click();
+  // await $("(//a[@id='Button-232952'])[2]").click();
   await browser.pause(3000);
+  await browser.$("(//*[@id='Button-232952'])[2]").scrollIntoView()
+  await browser.$("(//*[@id='Button-232952'])[2]").click()
 });
 
 Then(/^Click on ContinueApply$/, async function () {
@@ -110,8 +113,8 @@ Then(/^click on Continue and Fill the details$/, async function () {
   const cont = await $('//button[contains(text(),"Continue")]');
   cont.scrollIntoView();
   await browser.pause(2000);
-  cont.moveTo();
-  await browser.pause(2000);
+  // cont.moveTo();
+  // await browser.pause(2000);
   await cont.click();
   await browser.pause(15000);
 
@@ -125,18 +128,43 @@ Then(/^click on Continue and Fill the details$/, async function () {
 
   let items = await $$("[class='ng-binding ng-scope']");
   for (var i = 0; i < (await items.length); i++) {
-    if ((await items[i].getText()).startsWith("Social Professionals (general)")) {
+    if (
+      (await items[i].getText()).startsWith("Social Professionals (general)")
+    ) {
       items[i].click();
       break;
     }
   }
   await browser.pause(5000);
 
-
   const amount = await $('//input[@name="incomeAmount"]');
   amount.setValue(20000);
   await browser.pause(5000);
 
+  const frequency = await $('//select[@name="incomeFrequency"]');
+  await $(frequency).selectByVisibleText("Annually");
+  await browser.pause(5000);
+
+  await cont.click();
+  await browser.pause(10000);
 
 
+  //Expenses
+  const expenseamount = await $('//input[@name="expenseAmount"]');
+  amount.setValue(6000);
+  await browser.pause(5000);
+
+  const pfrequency = await $('//select[@name="frequency"]');
+  await $(pfrequency).selectByVisibleText("Monthly");
+  await browser.pause(5000);
+
+  const cancel = await $('//button[contains(text(),"Cancel")]'); 
+  await cancel.click();
+  await browser.pause(15000);
+
+  if(await browser.isAlertOpen())
+  {
+    await browser.acceptAlert()
+    await browser.pause(15000);
+  }
 });
