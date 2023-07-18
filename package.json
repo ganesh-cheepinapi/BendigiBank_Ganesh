@@ -1,0 +1,28 @@
+{
+  "name": "bindigocreditcard",
+  "version": "1.0.0",
+  "description": "Bendigo application E2E Test",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run ./wdio.conf.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/cli": "^8.13.1",
+    "@wdio/cucumber-framework": "^8.12.1",
+    "@wdio/local-runner": "^8.13.1",
+    "@wdio/spec-reporter": "^8.12.2",
+    "chai": "^4.3.7",
+    "chromedriver": "^114.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "wdio-chromedriver-service": "^8.1.1"
+  },
+  "dependencies": {
+    "@types/chai": "^4.3.5",
+    "chai-webdriverio": "^1.0.0"
+  }
+}
